@@ -6,20 +6,24 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "typecheck": "tsc",
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@types/bootstrap": "^5.2.11",
     "@types/node": "^26.6.5",
-    "sass": "^1.105.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
     "typescript": "~6.0.2",
-    "vite": "^8.3.0",
-    "vite-plugin-handlebars": "^2.0.3"
+    "vite": "^8.3.0"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.8",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^9.5.0",
+    "@mui/material": "^9.5.0",
     "axios": "^1.20.0",
-    "bootstrap": "^5.3.8",
-    "bootstrap-icons": "^1.13.2"
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
   }
 }

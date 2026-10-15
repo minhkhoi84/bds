@@ -1,21 +1,27 @@
-// Loại dự án: Cao Tầng | Thấp Tầng
-export type ProjectCategory = 'high-rise' | 'low-rise';
-
+// Khớp với dữ liệu mà src/api/projectApi.ts và src/mock/mockApi.ts đang dùng
 export interface Project {
-  id: string | number;
-  title: string;
-  location: string;
-  description: string;
+  id: number | string;
+  name: string;
+  address: string;
+  shortDescription: string;
   thumbnail: string;
-  type: ProjectCategory;
+  investorId: number | string;
+  regionCode: string;
+  typeCode: string; // HIGH_RISE | LOW_RISE
   typeName: string;
+  statusCode: string; // OPEN | COMING_SOON | HANDED_OVER
   isHot?: boolean;
-  isUpcoming?: boolean; // Sắp mở bán
+  createdAt: string;
 }
 
-export interface HotProject {
-  id: string | number;
-  title: string;
-  location: string;
-  thumbnail: string;
+export interface ProjectSearchParams {
+  page?: number;
+  pageSize?: number;
+  sort?: string;
+  name?: string;
+  investorId?: number | string;
+  regionCode?: string;
+  typeCode?: string;
+  statusCode?: string;
+  isHot?: boolean;
 }
