@@ -85,6 +85,12 @@ export default function ProjectCard({ project, onShare }: ProjectCardProps) {
             left: 8,
             borderRadius: '4px',
             bgcolor: isHighRise ? brand.cyan : brand.blue,
+            // Figma: Inter Medium 11px, line-height 100%, Title case, primary/100
+            fontSize: 11,
+            fontWeight: 500,
+            lineHeight: 1,
+            color: brand.primary100,
+            textTransform: 'capitalize',
           }}
         />
         <Box sx={{ position: 'absolute', left: 0, right: 0, bottom: 0, display: 'flex', justifyContent: 'space-between', p: 1 }}>

@@ -50,62 +50,71 @@ const FOOTER_LINKS = [
   { label: 'Liên hệ', href: '/lien-he' },
 ];
 
-const titleSx = { fontSize: 16, fontWeight: 700, mb: '12px', color: '#fff' };
-const contactIconSx = { fontSize: 18, flexShrink: 0 };
+// Tiêu đề "Danh mục" / "Kết nối" (Frame 86 / 87: tiêu đề + nội dung, gap 16)
+const titleSx = { fontSize: 20, fontWeight: 500, lineHeight: '20px', color: '#fff' };
+const contactIconSx = { fontSize: 24, flexShrink: 0 };
+const contactRowSx = { alignItems: 'center', gap: '10px' };
 
 export default function Footer() {
   return (
     <Box component="footer" sx={{ background: brand.gradient, color: '#fff' }}>
       <Container sx={{ maxWidth: { xs: 1440 }, px: { xs: 2, md: 4 }, py: 4, display: 'flex', flexDirection: 'column', gap: 3 }}>
-        {/* 3 cột, space-between; xếp dọc dưới 992px */}
+        {/* Frame 85: 3 cột, Fill x 234 hug, space-between; xếp dọc dưới 992px */}
         <Stack direction={{ xs: 'column', lg: 'row' }} sx={{ justifyContent: 'space-between', alignItems: 'stretch', gap: 4 }}>
-          {/* Cột 1: logo + giới thiệu + liên hệ */}
-          <Box>
-            <Box component="a" href="/" sx={{ display: 'inline-block', mb: 2 }}>
-              <svg width="42" height="38" viewBox="0 0 40 34" fill="none" style={{ display: 'block' }}>
-                <rect x="2" y="14" width="6" height="20" rx="2" fill="#ffffff" />
-                <path d="M12 6C12 4.89543 12.8954 4 14 4H16.5L19 1.5C19.3787 1.12132 20 1.3891 20 1.92487V32C20 33.1046 19.1046 34 18 34H14C12.8954 34 12 33.1046 12 32V6Z" fill="#ffffff" />
-                <rect x="23" y="10" width="6" height="24" rx="2" fill="#ffffff" />
-              </svg>
-            </Box>
-            <Typography sx={{ fontSize: 14, lineHeight: 1.6, color: 'rgba(255, 255, 255, 0.9)', mb: 3 }}>
-              Nền tảng công nghệ tiên phong &amp; dẫn đầu
-              <br />
-              lĩnh vực kinh doanh bất động sản tại Việt Nam
-            </Typography>
-            <Stack component="ul" sx={{ listStyle: 'none', p: 0, m: 0, gap: 1, fontSize: 13, lineHeight: 1.5, color: 'rgba(255, 255, 255, 0.95)' }}>
-              <Stack component="li" direction="row" sx={{ alignItems: 'center', gap: 1 }}>
+          {/* Frame 84 (rộng 373): Frame 24 (logo + giới thiệu) + Frame 83 (liên hệ), gap 16 */}
+          <Stack sx={{ width: { lg: 373 }, flexShrink: 0, gap: 2 }}>
+            {/* Frame 24: dọc, gap 16 */}
+            <Stack sx={{ gap: 2, alignItems: 'flex-start' }}>
+              <Box component="a" href="/" sx={{ display: 'inline-block' }}>
+                <Box component="img" src="/images/logo_2.svg" alt="Realestate" sx={{ width: 40, height: 40, display: 'block' }} />
+              </Box>
+              {/* Figma: Inter SemiBold 17/26, grey/100, khung 373 x 52 (2 dòng) */}
+              <Typography sx={{ maxWidth: 373, fontSize: 17, fontWeight: 600, lineHeight: '26px', color: brand.grey100 }}>
+                Nền tảng công nghệ tiên phong &amp; dẫn đầu
+                <br />
+                lĩnh vực kinh doanh bất động sản tại Việt Nam
+              </Typography>
+            </Stack>
+
+            {/* Frame 83: dọc, gap 8 — mỗi dòng icon 24 + chữ */}
+            <Stack component="ul" sx={{ listStyle: 'none', p: 0, m: 0, gap: 1, fontSize: 15, lineHeight: '23px', color: '#fff' }}>
+              <Stack component="li" direction="row" sx={contactRowSx}>
                 <SmartphoneOutlinedIcon sx={contactIconSx} />
                 <span>0972 72 9999</span>
               </Stack>
-              <Stack component="li" direction="row" sx={{ alignItems: 'center', gap: 1 }}>
+              <Stack component="li" direction="row" sx={contactRowSx}>
                 <EmailOutlinedIcon sx={contactIconSx} />
                 <Link href="mailto:Contact@gmail.com" underline="none" sx={{ color: '#fff' }}>
                   Contact@gmail.com
                 </Link>
               </Stack>
-              <Stack component="li" direction="row" sx={{ alignItems: 'flex-start', gap: 1 }}>
-                <LocationOnOutlinedIcon sx={{ ...contactIconSx, mt: '2px' }} />
-                <span>SB24-36, Sao Biển 24, KĐT Vinhomes Ocean Park, Xã Gia Lâm, TP Hà Nội, Việt Nam</span>
+              <Stack component="li" direction="row" sx={contactRowSx}>
+                <LocationOnOutlinedIcon sx={contactIconSx} />
+                <span>
+                  SB24-36, Sao Biển 24, KĐT Vinhomes Ocean Park,
+                  <br />
+                  Xã Gia Lâm, TP Hà Nội, Việt Nam
+                </span>
               </Stack>
             </Stack>
-          </Box>
+          </Stack>
 
-          {/* Cột 2: Danh mục + Kết nối, rộng 280 */}
+          {/* Frame 89: rộng 280, cao Fill (234) — Frame 86 (Danh mục) + Frame 87 (Kết nối) */}
           <Stack sx={{ flex: { lg: '0 0 280px' }, gap: 4 }}>
-            <Box>
+            <Stack sx={{ gap: 2 }}>
               <Typography component="h4" sx={titleSx}>
                 Danh mục
               </Typography>
               <Box component="ul" sx={{ listStyle: 'none', p: 0, m: 0 }}>
                 {FOOTER_LINKS.map((l) => (
-                  <Box component="li" key={l.href} sx={{ mb: '6px' }}>
+                  <Box component="li" key={l.href}>
                     <Link
                       href={l.href}
                       underline="none"
                       sx={{
-                        fontSize: 13,
-                        color: 'rgba(255, 255, 255, 0.85)',
+                        fontSize: 16,
+                        lineHeight: '24px',
+                        color: '#fff',
                         transition: 'color .2s ease, padding-left .2s ease',
                         '&:hover': { color: '#fff', pl: '4px' },
                       }}
@@ -115,12 +124,12 @@ export default function Footer() {
                   </Box>
                 ))}
               </Box>
-            </Box>
-            <Box>
+            </Stack>
+            <Stack sx={{ gap: 2 }}>
               <Typography component="h4" sx={titleSx}>
                 Kết nối
               </Typography>
-              <Stack direction="row" sx={{ alignItems: 'center', gap: 1 }}>
+              <Stack direction="row" sx={{ alignItems: 'center', gap: 2 }}>
                 {SOCIALS.map((s) => (
                   <Box
                     key={s.label}
@@ -128,8 +137,8 @@ export default function Footer() {
                     href="#"
                     aria-label={s.label}
                     sx={{
-                      width: 28,
-                      height: 28,
+                      width: 26,
+                      height: 26,
                       borderRadius: '50%',
                       bgcolor: '#fff',
                       display: 'inline-flex',
@@ -143,7 +152,7 @@ export default function Footer() {
                   </Box>
                 ))}
               </Stack>
-            </Box>
+            </Stack>
           </Stack>
 
           {/* Cột 3: bản đồ, cao 234 */}
@@ -167,9 +176,9 @@ export default function Footer() {
           </Box>
         </Stack>
 
-        {/* Bản quyền: viền trên 1px, padding trên 16 */}
-        <Box sx={{ pt: 2, borderTop: '1px solid #eef0fd' }}>
-          <Typography sx={{ fontSize: 13, fontWeight: 500, color: 'rgba(255, 255, 255, 0.9)' }}>
+        {/* Frame 79: Fill x 42 hug, viền trên 1px #EEF0FD, padding trên 16 */}
+        <Box sx={{ pt: 2, borderTop: `1px solid ${brand.primary100}` }}>
+          <Typography sx={{ fontSize: 18, fontWeight: 600, lineHeight: '25px', color: brand.grey100 }}>
             &copy; 2026 - Realestate. All rights reserved.
           </Typography>
         </Box>

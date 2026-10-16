@@ -18,16 +18,28 @@ const NAV_ITEMS = [
   { label: 'Tin tức', href: '/tin-tuc' },
 ];
 
-const navLinkSx = (active: boolean) => ({
+// 3 mục cùng màu xám, di chuột vào thì chuyển xanh
+const navLinkSx = {
   fontSize: 17,
-  fontWeight: active ? 700 : 500,
+  fontWeight: 500,
   lineHeight: '25px',
   textTransform: 'uppercase',
   whiteSpace: 'nowrap',
-  color: active ? brand.blue : '#7c7d84',
+  color: '#7c7d84',
   transition: 'color .2s ease',
-  '&:hover': { color: brand.blue },
-});
+  '&:hover': { color: brand.blue, fontWeight: 700 }, // Figma: primary/base, Bold
+  // Giữ sẵn bề rộng của chữ Bold để hover không làm menu xô lệch
+  display: 'inline-flex',
+  flexDirection: 'column',
+  '&::after': {
+    content: 'attr(data-text)',
+    fontWeight: 700,
+    height: 0,
+    overflow: 'hidden',
+    visibility: 'hidden',
+    pointerEvents: 'none',
+  },
+} as const;
 
 const registerSx = {
   p: 0,
@@ -55,7 +67,7 @@ const loginSx = {
 };
 
 // Gộp header trong index.html cũ (desktop) + partials/header.html (nút toggle mobile) -> Drawer
-export default function Header({ activeHref = '/du-an' }: { activeHref?: string }) {
+export default function Header() {
   const [open, setOpen] = useState(false);
 
   const authButtons = (
@@ -84,7 +96,7 @@ export default function Header({ activeHref = '/du-an' }: { activeHref?: string 
           {/* Desktop (>= 992px) */}
           <Stack component="nav" direction="row" sx={{ display: { xs: 'none', lg: 'flex' }, gap: 4 }}>
             {NAV_ITEMS.map((item) => (
-              <Link key={item.href} href={item.href} underline="none" sx={navLinkSx(item.href === activeHref)}>
+              <Link key={item.href} href={item.href} underline="none" data-text={item.label} sx={navLinkSx}>
                 {item.label}
               </Link>
             ))}
@@ -107,7 +119,7 @@ export default function Header({ activeHref = '/du-an' }: { activeHref?: string 
           </IconButton>
           <Stack component="nav" sx={{ gap: 2.5 }}>
             {NAV_ITEMS.map((item) => (
-              <Link key={item.href} href={item.href} underline="none" sx={navLinkSx(item.href === activeHref)}>
+              <Link key={item.href} href={item.href} underline="none" data-text={item.label} sx={navLinkSx}>
                 {item.label}
               </Link>
             ))}
