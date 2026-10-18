@@ -6,7 +6,11 @@ import Typography from '@mui/material/Typography';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import SmartphoneOutlinedIcon from '@mui/icons-material/SmartphoneOutlined';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { brand } from '../theme';
+
+const MAP_LINK = "https://www.google.com/maps/place/Vinhomes+Ocean+Park,+Gia+L%C3%A2m,+H%C3%A0+N%E1%BB%99i,+Vi%E1%BB%87t+Nam/@20.9943553,105.947541,15z";
+const MAP_EMBED = "https://www.google.com/maps?q=20.9948063,105.9464883&z=15&output=embed";
 
 const SOCIAL_BLUE = '#1e56cf';
 
@@ -90,11 +94,11 @@ export default function Footer() {
               </Stack>
               <Stack component="li" direction="row" sx={contactRowSx}>
                 <LocationOnOutlinedIcon sx={contactIconSx} />
-                <span>
+                <Link href={MAP_LINK} target="_blank" rel="noopener noreferrer" underline="none" sx={{ color: '#fff' }}>
                   SB24-36, Sao Biển 24, KĐT Vinhomes Ocean Park,
                   <br />
                   Xã Gia Lâm, TP Hà Nội, Việt Nam
-                </span>
+                </Link>
               </Stack>
             </Stack>
           </Stack>
@@ -155,25 +159,36 @@ export default function Footer() {
             </Stack>
           </Stack>
 
-          {/* Cột 3: bản đồ, cao 234 */}
-          <Box
-            sx={{
-              flex: { lg: '0 0 380px' },
-              width: { xs: '100%', lg: 'auto' },
-              height: 234,
-              borderRadius: '8px',
-              overflow: 'hidden',
-              bgcolor: 'rgba(255, 255, 255, 0.15)', // nền chờ khi ảnh chưa có
-              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.12)',
-            }}
-          >
+          {/* Cột 3: bản đồ Google Maps nhúng, cao 234 + link mở ngoài */}
+          <Stack sx={{ flex: { lg: '0 0 380px' }, width: { xs: '100%', lg: 'auto' }, gap: 1 }}>
             <Box
-              component="img"
-              src="/images/footer-map.png"
-              alt="Bản đồ Vinhomes Ocean Park"
-              sx={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-          </Box>
+              sx={{
+                height: 234,
+                borderRadius: '8px',
+                overflow: 'hidden',
+                bgcolor: 'rgba(255, 255, 255, 0.15)', // nền chờ khi bản đồ chưa tải
+                boxShadow: '0 4px 14px rgba(0, 0, 0, 0.12)',
+              }}
+            >
+              <Box
+                component="iframe"
+                src={MAP_EMBED}
+                title="Bản đồ Vinhomes Ocean Park"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                sx={{ border: 0, width: '100%', height: '100%', display: 'block' }}
+              />
+            </Box>
+            <Link
+              href={MAP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              underline="hover"
+              sx={{ alignSelf: 'flex-end', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: 13, color: '#fff' }}
+            >
+              Xem trên Google Maps <OpenInNewIcon sx={{ fontSize: 14 }} />
+            </Link>
+          </Stack>
         </Stack>
 
         {/* Frame 79: Fill x 42 hug, viền trên 1px #EEF0FD, padding trên 16 */}
