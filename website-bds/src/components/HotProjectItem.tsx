@@ -16,6 +16,7 @@ export default function HotProjectItem({ project }: { project: Project }) {
         display: 'flex',
         alignItems: 'center',
         gap: '10px',
+        minWidth: 0,
         textDecoration: 'none',
         '&:hover .hot-item__name': { color: brand.blue },
       }}
@@ -26,12 +27,25 @@ export default function HotProjectItem({ project }: { project: Project }) {
         logoSize={24}
         sx={{ flexShrink: 0, width: 72, height: 72, objectFit: 'cover', borderRadius: '4px', bgcolor: brand.primary100 }}
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
+      {/* minWidth 0 + overflow hidden để ellipsis hoạt động trong flex */}
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0, overflow: 'hidden' }}>
+        {/* Tên: tối đa 2 dòng */}
         <Typography
           component="h4"
           className="hot-item__name"
-          noWrap
-          sx={{ fontSize: 14, fontWeight: 500, lineHeight: '18px', color: brand.textDark, transition: 'color .2s ease' }}
+          sx={{
+            fontSize: 14,
+            fontWeight: 500,
+            lineHeight: '18px',
+            color: brand.textDark,
+            transition: 'color .2s ease',
+            display: '-webkit-box',
+            WebkitBoxOrient: 'vertical',
+            WebkitLineClamp: 2,
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            overflowWrap: 'anywhere',
+          }}
         >
           {project.name}
         </Typography>
