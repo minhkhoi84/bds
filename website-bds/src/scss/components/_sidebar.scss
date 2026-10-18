@@ -23,34 +23,40 @@
     background-color: #eef0fd; // nền chờ khi ảnh chưa tải
   }
 
-  /* Frame 68: tên (18) + gap 4 + địa chỉ (16) = 38 */
+  /* Frame 68: tên (18) + gap 4 + địa chỉ (16) = 38; tối đa 2 + 2 dòng = 72, không cao hơn ảnh */
   &__info {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
     gap: 4px;
     min-width: 0; // cho phép chữ dài bị cắt "…"
   }
 
+  // Tên và địa chỉ: tối đa 2 dòng, quá thì "…"; chuỗi dài không có khoảng trắng vẫn xuống dòng
+  &__name,
+  &__addr {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
+  }
+
   &__name {
     margin-bottom: 0;
-    overflow: hidden;
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
     color: #38393d;
-    white-space: nowrap;
-    text-overflow: ellipsis;
     transition: color 0.2s ease;
   }
 
   &__addr {
-    display: block;
-    overflow: hidden;
     font-size: 12px;
     line-height: 16px;
     color: #7c7d84;
-    white-space: nowrap;
-    text-overflow: ellipsis;
   }
 
   &:hover &__name {

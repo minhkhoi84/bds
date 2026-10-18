@@ -1,6 +1,13 @@
 import { Toast } from "bootstrap";
+import { escapeHtml as esc } from "./format";
 
-export function showToast(message: string): void {
+interface ToastAction {
+  label: string;
+  onClick: () => void;
+}
+
+// Có action (VD nút "Thử lại") thì toast không tự ẩn, bấm action sẽ đóng toast
+export function showToast(message: string, action?: ToastAction): void {
   let box = document.querySelector<HTMLElement>("#toast-container");
   if (!box) {
     box = document.createElement("div");
@@ -10,11 +17,18 @@ export function showToast(message: string): void {
   }
   const el = document.createElement("div");
   el.className = "toast align-items-center text-bg-dark border-0";
-  el.innerHTML = `<div class="d-flex">
-    <div class="toast-body">${message}</div>
-    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+  el.setAttribute("role", action ? "alert" : "status");
+  el.innerHTML = `<div class="d-flex align-items-center">
+    <div class="toast-body">${esc(message)}</div>
+    ${action ? `<button type="button" class="btn btn-light btn-sm ms-auto js-toast-action">${esc(action.label)}</button>` : ""}
+    <button type="button" class="btn-close btn-close-white me-2 ${action ? "ms-2" : "m-auto"}" data-bs-dismiss="toast" aria-label="Đóng"></button>
   </div>`;
   box.appendChild(el);
   el.addEventListener("hidden.bs.toast", () => el.remove());
-  new Toast(el, { delay: 2000 }).show();
+  const toast = new Toast(el, action ? { autohide: false } : { delay: 2000 });
+  el.querySelector(".js-toast-action")?.addEventListener("click", () => {
+    toast.hide();
+    action?.onClick();
+  });
+  toast.show();
 }

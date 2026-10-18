@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import handlebars from "vite-plugin-handlebars";
 import { resolve } from "path";
+import https from "node:https";
 
 export default defineConfig({
   plugins: [handlebars({ partialDirectory: resolve(import.meta.dirname, "src/partials") })],
@@ -13,11 +14,13 @@ export default defineConfig({
     },
   },
   server: {
+    // Proxy để tránh CORS khi chạy localhost; khớp VITE_API_URL=/api
     proxy: {
       "/api": {
-        target: "https://chua-co-backend.com", // điền base URL thật khi có backend
+        target: "https://api-uat.vinhomes.biz.vn",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (p) => p.replace(/^\/api/, "/hovixi/api/v1"),
+        agent: new https.Agent({ keepAlive: false }),
       },
     },
   },

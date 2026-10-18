@@ -3,7 +3,7 @@ import { projectApi } from "../api/projectApi";
 import { investorApi } from "../api/investorApi";
 import { masterDataApi } from "../api/masterDataApi";
 import { newsApi } from "../api/newsApi";
-import { projectCard } from "../components/projectCard";
+import { renderProjectCard as projectCard } from "../components/projectCard";
 import { hotProjectItem } from "../components/hotProjectItem";
 import { newsCard } from "../components/newsCard";
 import { renderPagination } from "../components/pagination";

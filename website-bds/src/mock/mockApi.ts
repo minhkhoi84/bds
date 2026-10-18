@@ -1,5 +1,6 @@
 import { projects, investors, regions, types, statuses } from "./projects";
 import { news } from "./news";
+import { toProject } from "../api/mappers";
 import type { GroupCode } from "../utils/constants";
 import type { Paged } from "../types/api";
 import type { Project, ProjectSearchParams } from "../types/project";
@@ -32,7 +33,8 @@ export async function searchProjects({
     .filter((p) => !typeCode || p.typeCode === typeCode)
     .filter((p) => !statusCode || p.statusCode === statusCode)
     .filter((p) => isHot === undefined || p.isHot === isHot)
-    .sort(byNewest);
+    .sort(byNewest)
+    .map(toProject);
   return paginate(list, page, pageSize);
 }
 

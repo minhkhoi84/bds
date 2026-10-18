@@ -12,4 +12,7 @@ export function slugify(text = ""): string {
 }
 
 export const projectDetailUrl = (id: string | number, slug: string): string =>
-  `/project-detail.html?id=${id}&slug=${slug}`;
+  `/project-detail.html?id=${encodeURIComponent(id)}&slug=${encodeURIComponent(slug)}`;
+
+export const newsDetailUrl = (id: string | number): string =>
+  `/news-detail.html?id=${encodeURIComponent(id)}`;

@@ -1,5 +1,7 @@
 import type { Project, HotProject } from '../types/project';
 import { escapeHtml as esc } from '../utils/format';
+import { projectDetailUrl, slugify } from '../utils/slug';
+import { thumb } from './thumb';
 
 // Render 1 thẻ dự án chính
 export function renderProjectCard(project: Project): string {
@@ -10,12 +12,17 @@ export function renderProjectCard(project: Project): string {
     ? '<span class="project-card__status project-card__status--upcoming"><i class="bi bi-clock-history"></i> Sắp Mở Bán</span>'
     : '';
   const typeIcon = project.type === 'high-rise' ? 'bi-buildings' : 'bi-houses';
+  const slug = slugify(project.title);
+  const url = esc(projectDetailUrl(project.id, slug));
+  // Địa chỉ / mô tả rỗng thì ẩn dòng đó
+  const addr = project.location ? `<p class="project-card__addr">${esc(project.location)}</p>` : '';
+  const desc = project.description ? `<p class="project-card__desc">${esc(project.description)}</p>` : '';
 
   return `
     <div class="col-12 col-md-6 col-lg-4">
-      <article class="project-card" data-id="${esc(project.id)}">
-        <a href="/du-an/${esc(project.id)}" class="project-card__thumb">
-          <img class="project-card__img" src="${esc(project.thumbnail)}" alt="${esc(project.title)}" loading="lazy" />
+      <article class="project-card" data-id="${esc(project.id)}" data-slug="${esc(slug)}">
+        <a href="${url}" class="project-card__thumb">
+          ${thumb(project.thumbnail, 'project-card__img', project.title)}
           <span class="project-card__type project-card__type--${project.type}"><i class="bi ${typeIcon}"></i> ${esc(project.typeName)}</span>
           <div class="project-card__badges">
             ${hotBadge}
@@ -26,11 +33,11 @@ export function renderProjectCard(project: Project): string {
           <div class="project-card__content">
             <div class="project-card__heading">
               <h3 class="project-card__name">
-                <a href="/du-an/${esc(project.id)}">${esc(project.title)}</a>
+                <a href="${url}">${esc(project.title)}</a>
               </h3>
-              <p class="project-card__addr">${esc(project.location)}</p>
+              ${addr}
             </div>
-            <p class="project-card__desc">${esc(project.description)}</p>
+            ${desc}
           </div>
           <button type="button" class="project-card__share js-share">
             <i class="bi bi-box-arrow-up-right"></i> Chia sẻ
@@ -43,12 +50,13 @@ export function renderProjectCard(project: Project): string {
 
 // Render 1 item trong cột "Dự Án HOT"
 export function renderHotProjectItem(item: HotProject): string {
+  const addr = item.location ? `<span class="hot-item__addr">${esc(item.location)}</span>` : '';
   return `
-    <a href="/du-an/${esc(item.id)}" class="hot-item">
-      <img class="hot-item__img" src="${esc(item.thumbnail)}" alt="${esc(item.title)}" loading="lazy" />
+    <a href="${esc(projectDetailUrl(item.id, slugify(item.title)))}" class="hot-item">
+      ${thumb(item.thumbnail, 'hot-item__img', item.title)}
       <div class="hot-item__info">
         <h4 class="hot-item__name">${esc(item.title)}</h4>
-        <span class="hot-item__addr">${esc(item.location)}</span>
+        ${addr}
       </div>
     </a>
   `;

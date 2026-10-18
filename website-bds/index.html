@@ -12,7 +12,7 @@
   <header class="main-header">
     <div class="container d-flex align-items-center justify-content-between">
       <a href="/" class="header-logo d-flex align-items-center">
-        <img src="public/images/logo.svg" 
+        <img src="/images/logo.svg" 
         alt="Realestate Logo" 
         width="46" 
         height="46" 
@@ -66,7 +66,7 @@
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
-            <input type="text" class="form-control" placeholder="Tìm kiếm dự án" />
+            <input type="text" class="form-control" placeholder="Tìm kiếm dự án" enterkeyhint="search" />
           </div>
         </div>
 
@@ -188,7 +188,8 @@
           <li class="d-flex align-items-start gap-2">
             <!-- Icon Địa chỉ -->
             <svg class="mt-1 flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            <span>SB24-36, Sao Biển 24, KĐT Vinhomes Ocean Park, Xã Gia Lâm, TP Hà Nội, Việt Nam</span>
+            <a href="https://www.google.com/maps/place/Vinhomes+Ocean+Park,+Gia+L%C3%A2m,+H%C3%A0+N%E1%BB%99i,+Vi%E1%BB%87t+Nam/@20.9943553,105.947541,15z"
+               target="_blank" rel="noopener noreferrer" class="text-white text-decoration-none">SB24-36, Sao Biển 24, KĐT Vinhomes Ocean Park, Xã Gia Lâm, TP Hà Nội, Việt Nam</a>
           </li>
         </ul>
       </div>
@@ -232,9 +233,13 @@
       </div>
 
       <!-- Cột 3 (Map Maker): Bản đồ -->
-      <div class="footer-map-wrapper">
-        <!-- Thay ảnh hoặc nhúng iframe Google Map -->
-        <img src="/images/footer-map.png" alt="Bản đồ Vinhomes Ocean Park" class="footer-map-img" />
+      <div class="footer-map-wrapper position-relative rounded-3 overflow-hidden">
+        <iframe src="https://www.google.com/maps?q=20.9948063,105.9464883&z=15&output=embed"
+                title="Bản đồ Vinhomes Ocean Park" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade" class="w-100 h-100 border-0 d-block"></iframe>
+        <a href="https://www.google.com/maps/place/Vinhomes+Ocean+Park,+Gia+L%C3%A2m,+H%C3%A0+N%E1%BB%99i,+Vi%E1%BB%87t+Nam/@20.9943553,105.947541,15z"
+           target="_blank" rel="noopener noreferrer"
+           class="btn btn-light btn-sm position-absolute top-0 end-0 m-2 shadow-sm">Xem trên Google Maps</a>
       </div>
 
     </div>

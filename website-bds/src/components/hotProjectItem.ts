@@ -4,11 +4,11 @@ import type { Project } from "../types/project";
 
 export function hotProjectItem(p: Project): string {
   return `
-  <li class="hot-item" data-id="${esc(p.id)}" data-slug="${slugify(p.name)}">
-    <img class="hot-item__img" src="${esc(p.thumbnail)}" alt="${esc(p.name)}" loading="lazy" />
+  <li class="hot-item" data-id="${esc(p.id)}" data-slug="${slugify(p.title)}">
+    <img class="hot-item__img" src="${esc(p.thumbnail)}" alt="${esc(p.title)}" loading="lazy" />
     <div>
-      <div class="hot-item__name">${esc(p.name)}</div>
-      <div class="hot-item__addr">${esc(p.address)}</div>
+      <div class="hot-item__name">${esc(p.title)}</div>
+      <div class="hot-item__addr">${esc(p.location)}</div>
     </div>
   </li>`;
 }

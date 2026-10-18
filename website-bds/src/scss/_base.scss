@@ -43,6 +43,7 @@ body { color: #1f2937; }
   display: flex;
   flex-direction: column;
   flex: 0 0 280px;
+  min-width: 0; // không cho text dài (tên/địa chỉ dự án HOT) kéo sidebar rộng quá 280px
   gap: 16px;
 
   @media (max-width: 1199.98px) {

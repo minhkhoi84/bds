@@ -1,4 +1,4 @@
-import type { Project } from "../types/project";
+import type { RawProject } from "../types/api";
 import type { Investor, MasterDataItem } from "../types/masterData";
 
 const NAMES = [
@@ -30,13 +30,14 @@ export const statuses: MasterDataItem[] = [
 const typeNameOf = (code: string) => types.find((t) => t.code === code)?.value ?? "";
 
 // 30 dự án, id càng lớn càng mới
-export const projects: Project[] = Array.from({ length: 30 }, (_, i) => {
+// Dạng dữ liệu thô giống backend, mockApi map qua toProject như API thật
+export const projects: (RawProject & { createdAt: string })[] = Array.from({ length: 30 }, (_, i) => {
   const id = i + 1;
   const typeCode = id % 2 ? "HIGH_RISE" : "LOW_RISE";
   return {
     id,
     name: NAMES[i % NAMES.length],
-    thumbnail: `https://picsum.photos/seed/bds${id}/640/400`,
+    fileInfo: { fullLink: `https://picsum.photos/seed/bds${id}/640/400` },
     address: "Nguyễn Xiển - Phước Thiện, Long Bình, TP. HCM",
     shortDescription:
       "Vinhomes Grand Park hứa hẹn trở thành điểm đến quốc tế mới với thành phố triệu dân đầu tiên, không gian xanh và tiện ích đồng bộ cho cộng đồng cư dân hiện đại.",

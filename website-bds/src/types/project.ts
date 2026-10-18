@@ -13,6 +13,19 @@ export interface Project {
   isUpcoming?: boolean; // Sắp mở bán
 }
 
+// Tham số tìm kiếm phía UI: page đếm từ 1, projectApi tự đổi sang pageNumber đếm từ 0
+export interface ProjectSearchParams {
+  page?: number;
+  pageSize?: number;
+  sort?: string;
+  name?: string;
+  investorId?: string | number;
+  regionCode?: string;
+  typeCode?: string;
+  statusCode?: string;
+  isHot?: boolean;
+}
+
 export interface HotProject {
   id: string | number;
   title: string;
