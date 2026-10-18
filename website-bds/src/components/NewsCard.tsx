@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import CoverImage from './CoverImage';
 import type { News } from '../types/news';
 import { formatDate } from '../utils/format';
 import { brand } from '../theme';
@@ -27,11 +27,10 @@ export default function NewsCard({ news }: { news: News }) {
         '&:hover': { borderColor: brand.blue, boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12)', transform: 'translateY(-2px)' },
       }}
     >
-      <CardMedia
-        component="img"
-        image={news.thumbnail}
+      <CoverImage
+        src={news.thumbnail}
         alt={news.title}
-        loading="lazy"
+        logoSize={40}
         sx={{ aspectRatio: '3 / 2', objectFit: 'cover', bgcolor: brand.primary100 }}
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, px: '12px' }}>

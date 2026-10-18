@@ -6,4 +6,5 @@ export interface Investor {
 export interface MasterDataItem {
   code: string;
   value: string;
+  sortOrder?: number;
 }

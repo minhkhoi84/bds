@@ -7,7 +7,8 @@ import type { MasterDataItem } from "../types/masterData";
 export const masterDataApi = {
   async getByGroup(groupCode: GroupCode): Promise<MasterDataItem[]> {
     if (USE_MOCK) return mock.getMasterData(groupCode);
-    const { data } = await axiosClient.post("/master-data/list", { groupCode });
-    return toList<MasterDataItem>(data); // value để hiển thị, code để truyền lên API
+    const { data } = await axiosClient.get("/master-data/list", { params: { groupCode } });
+    // value để hiển thị, code để truyền lên API
+    return toList<MasterDataItem>(data).sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0));
   },
 };

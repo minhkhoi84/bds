@@ -2,7 +2,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Chip from '@mui/material/Chip';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
@@ -12,6 +11,7 @@ import HolidayVillageIcon from '@mui/icons-material/HolidayVillage';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import HistoryIcon from '@mui/icons-material/History';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import CoverImage from './CoverImage';
 import type { Project } from '../types/project';
 import { STATUS } from '../utils/constants';
 import { projectDetailUrl, slugify } from '../utils/slug';
@@ -67,12 +67,11 @@ export default function ProjectCard({ project, onShare }: ProjectCardProps) {
         href={url}
         sx={{ position: 'relative', display: 'block', aspectRatio: '352 / 234.67', overflow: 'hidden', bgcolor: brand.primary100 }}
       >
-        <CardMedia
-          component="img"
+        <CoverImage
           className="project-card__img"
-          image={project.thumbnail}
+          src={project.thumbnail}
           alt={project.name}
-          loading="lazy"
+          logoSize={48}
           sx={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform .3s ease' }}
         />
         <Chip

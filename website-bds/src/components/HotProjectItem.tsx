@@ -1,5 +1,6 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import CoverImage from './CoverImage';
 import type { Project } from '../types/project';
 import { projectDetailUrl, slugify } from '../utils/slug';
 import { brand } from '../theme';
@@ -19,11 +20,10 @@ export default function HotProjectItem({ project }: { project: Project }) {
         '&:hover .hot-item__name': { color: brand.blue },
       }}
     >
-      <Box
-        component="img"
+      <CoverImage
         src={project.thumbnail}
         alt={project.name}
-        loading="lazy"
+        logoSize={24}
         sx={{ flexShrink: 0, width: 72, height: 72, objectFit: 'cover', borderRadius: '4px', bgcolor: brand.primary100 }}
       />
       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '4px', minWidth: 0 }}>
