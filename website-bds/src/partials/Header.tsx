@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import { brand } from '../theme';
@@ -17,6 +18,10 @@ const NAV_ITEMS = [
   { label: 'Dự án', href: '/du-an' },
   { label: 'Tin tức', href: '/tin-tuc' },
 ];
+
+// Chưa có API đếm người online -> số cố định theo Figma
+const ONLINE_COUNT = 100;
+const ONLINE_DOT = '#1fc8a0';
 
 // 3 mục cùng màu xám, di chuột vào thì chuyển xanh
 const navLinkSx = {
@@ -105,10 +110,26 @@ export default function Header() {
             {authButtons}
           </Stack>
 
-          {/* Mobile: nút mở Drawer */}
-          <IconButton aria-label="Mở menu" onClick={() => setOpen(true)} sx={{ display: { lg: 'none' }, color: brand.textDark }}>
-            <MenuIcon />
-          </IconButton>
+          {/* Mobile: (< 768px: số người online) + nút mở Drawer */}
+          <Stack direction="row" sx={{ display: { xs: 'flex', lg: 'none' }, alignItems: 'center', gap: 1 }}>
+            <Stack direction="row" sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 1 }}>
+              <Box
+                sx={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: '50%',
+                  bgcolor: ONLINE_DOT,
+                  boxShadow: `0 0 0 3px ${ONLINE_DOT}33`,
+                }}
+              />
+              <Typography sx={{ fontSize: 15, lineHeight: 1, color: brand.textDark, whiteSpace: 'nowrap' }}>
+                {ONLINE_COUNT} người đang Online
+              </Typography>
+            </Stack>
+            <IconButton aria-label="Mở menu" onClick={() => setOpen(true)} sx={{ color: brand.textDark }}>
+              <MenuIcon />
+            </IconButton>
+          </Stack>
         </Toolbar>
       </Container>
 
