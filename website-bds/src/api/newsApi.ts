@@ -1,7 +1,6 @@
 import axiosClient from "./axiosClient";
 import { normalizePaged } from "./helpers";
-import { SORT_NEWEST, USE_MOCK } from "../utils/constants";
-import * as mock from "../mock/mockApi";
+import { SORT_NEWEST } from "../utils/constants";
 import type { Paged } from "../types/api";
 import type { News } from "../types/news";
 
@@ -18,7 +17,6 @@ const toNews = ({ shortContent, fileInfo, ...n }: RawNews): News => ({
 
 export const newsApi = {
   async search({ pageSize = 4, sort = SORT_NEWEST }: { pageSize?: number; sort?: string } = {}): Promise<Paged<News>> {
-    if (USE_MOCK) return mock.searchNews({ pageSize });
     // Trang chủ chỉ lấy trang đầu, không lọc theo projectId
     const { data } = await axiosClient.get("/portal/news/search", { params: { pageNumber: 0, pageSize, sort } });
     const paged = normalizePaged<RawNews>(data, pageSize);

@@ -75,12 +75,11 @@ export default function HomePage({ filters = EMPTY_FILTERS }: { filters?: Filter
 
   /* ---------- Dự án HOT + Tin tức (4 bài mới nhất) ---------- */
   useEffect(() => {
-    // pageSize lớn để lấy "toàn bộ"; nếu backend giới hạn pageSize thì phải lặp qua các trang
     projectApi
-      .search({ pageSize: 100, isHot: true })
-      .then((res) => {
-        debugLog('projectApi.search (hot)', res);
-        setHotProjects(Array.isArray(res?.items) ? res.items : []);
+      .getHotProjects()
+      .then((items) => {
+        debugLog('projectApi.getHotProjects', items);
+        setHotProjects(items);
       })
       .catch(console.error);
     newsApi

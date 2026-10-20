@@ -1,4 +1,4 @@
-// Khớp với dữ liệu mà src/api/projectApi.ts và src/mock/mockApi.ts đang dùng
+// Khớp với dữ liệu mà src/api/projectApi.ts đang dùng
 export interface Project {
   id: number | string;
   name: string;

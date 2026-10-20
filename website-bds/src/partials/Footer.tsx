@@ -56,6 +56,7 @@ const FOOTER_LINKS = [
 
 // Tiêu đề "Danh mục" / "Kết nối" (Frame 86 / 87: tiêu đề + nội dung, gap 16)
 const titleSx = { fontSize: 20, fontWeight: 500, lineHeight: '20px', color: '#fff' };
+// Figma: icon 24 x 24
 const contactIconSx = { fontSize: 24, flexShrink: 0 };
 const contactRowSx = { alignItems: 'center', gap: '10px' };
 
@@ -66,14 +67,22 @@ export default function Footer() {
         {/* Frame 85: 3 cột, Fill x 234 hug, space-between; xếp dọc dưới 992px */}
         <Stack direction={{ xs: 'column', lg: 'row' }} sx={{ justifyContent: 'space-between', alignItems: 'stretch', gap: 4 }}>
           {/* Frame 84 (rộng 373): Frame 24 (logo + giới thiệu) + Frame 83 (liên hệ), gap 16 */}
-          <Stack sx={{ width: { lg: 373 }, flexShrink: 0, gap: 2 }}>
+          <Stack sx={{ width: { md: 373 }, maxWidth: { md: 373 }, flexShrink: 0, gap: 2 }}>
             {/* Frame 24: dọc, gap 16 */}
             <Stack sx={{ gap: 2, alignItems: 'flex-start' }}>
               <Box component="a" href="/" sx={{ display: 'inline-block' }}>
-                <Box component="img" src="/images/logo_2.svg" alt="Realestate" sx={{ width: 40, height: 40, display: 'block' }} />
+                <Box component="img" src="/images/logo_2.svg" alt="Realestate" sx={{ width: { xs: 40, md: 38 }, height: { xs: 40, md: 38 }, display: 'block' }} />
               </Box>
-              {/* Figma: Inter SemiBold 17/26, grey/100, khung 373 x 52 (2 dòng) */}
-              <Typography sx={{ maxWidth: 373, fontSize: 17, fontWeight: 600, lineHeight: '26px', color: brand.grey100 }}>
+              {/* Figma: Inter Medium, grey/100, khung 373 (đúng 2 dòng) */}
+              <Typography
+                sx={{
+                  maxWidth: 373,
+                  fontSize: { xs: 17, md: 16 },
+                  fontWeight: { xs: 600, md: 500 },
+                  lineHeight: { xs: '26px', md: '24px' },
+                  color: brand.grey100,
+                }}
+              >
                 Nền tảng công nghệ tiên phong &amp; dẫn đầu
                 <br />
                 lĩnh vực kinh doanh bất động sản tại Việt Nam
@@ -81,7 +90,7 @@ export default function Footer() {
             </Stack>
 
             {/* Frame 83: dọc, gap 8 — mỗi dòng icon 24 + chữ */}
-            <Stack component="ul" sx={{ listStyle: 'none', p: 0, m: 0, gap: 1, fontSize: 15, lineHeight: '23px', color: '#fff' }}>
+            <Stack component="ul" sx={{ listStyle: 'none', p: 0, m: 0, gap: 1, fontSize: { xs: 15, md: 13 }, lineHeight: { xs: '23px', md: '20px' }, color: '#fff' }}>
               <Stack component="li" direction="row" sx={contactRowSx}>
                 <SmartphoneOutlinedIcon sx={contactIconSx} />
                 <span>0972 72 9999</span>
