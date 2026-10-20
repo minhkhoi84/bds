@@ -21,6 +21,29 @@
     }
   }
 
+  /* Online indicator (mobile only, via d-md-none) */
+  .header-online {
+    gap: 6px;
+    margin-right: 12px;
+    min-width: 0;
+
+    .header-online-dot {
+      width: 8px;
+      height: 8px;
+      flex-shrink: 0;
+      background-color: #12c79a;
+    }
+
+    .header-online-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      color: #38393d;
+      white-space: nowrap;
+    }
+  }
+
   /* Navigation */
   .header-nav {
     .nav-list {
