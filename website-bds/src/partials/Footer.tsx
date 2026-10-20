@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import SmartphoneOutlinedIcon from '@mui/icons-material/SmartphoneOutlined';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { brand } from '../theme';
 
 const MAP_LINK = "https://www.google.com/maps/place/Vinhomes+Ocean+Park,+Gia+L%C3%A2m,+H%C3%A0+N%E1%BB%99i,+Vi%E1%BB%87t+Nam/@20.9943553,105.947541,15z";
@@ -168,8 +167,8 @@ export default function Footer() {
             </Stack>
           </Stack>
 
-          {/* Cột 3: bản đồ Google Maps nhúng, cao 234 + link mở ngoài */}
-          <Stack sx={{ flex: { lg: '0 0 380px' }, width: { xs: '100%', lg: 'auto' }, gap: 1 }}>
+          {/* Cột 3: bản đồ Google Maps nhúng, cao 234 */}
+          <Stack sx={{ flex: { lg: '0 0 380px' }, width: { xs: '100%', lg: 'auto' } }}>
             <Box
               sx={{
                 height: 234,
@@ -188,15 +187,6 @@ export default function Footer() {
                 sx={{ border: 0, width: '100%', height: '100%', display: 'block' }}
               />
             </Box>
-            <Link
-              href={MAP_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="hover"
-              sx={{ alignSelf: 'flex-end', display: 'inline-flex', alignItems: 'center', gap: '4px', fontSize: 13, color: '#fff' }}
-            >
-              Xem trên Google Maps <OpenInNewIcon sx={{ fontSize: 14 }} />
-            </Link>
           </Stack>
         </Stack>
 
