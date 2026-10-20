@@ -1,6 +1,5 @@
 export const PAGE_SIZE = 12;
 export const SORT_NEWEST = "createdAt:desc";
-export const USE_MOCK = import.meta.env.VITE_USE_MOCK === "true";
 
 export const STATUS = { COMING_SOON: "COMING_SOON" } as const;
 

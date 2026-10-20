@@ -1,8 +1,7 @@
 import axiosClient from "./axiosClient";
 import { cleanParams, normalizePaged } from "./helpers";
 import { toProject } from "./mappers";
-import { PAGE_SIZE, SORT_NEWEST, USE_MOCK } from "../utils/constants";
-import * as mock from "../mock/mockApi";
+import { PAGE_SIZE, SORT_NEWEST } from "../utils/constants";
 import type { ApiResponse, Paged, RawProject } from "../types/api";
 import type { Project, ProjectSearchParams } from "../types/project";
 
@@ -13,8 +12,6 @@ export const projectApi = {
     sort = SORT_NEWEST,
     ...filters
   }: ProjectSearchParams = {}, { signal }: { signal?: AbortSignal } = {}): Promise<Paged<Project>> {
-    if (USE_MOCK) return mock.searchProjects({ page, pageSize, ...filters });
-
     // UI đếm trang từ 1, backend đếm từ 0
     const params = cleanParams({ pageNumber: page - 1, pageSize, sort, ...filters });
     const { data } = await axiosClient.get<ApiResponse<RawProject[]>>("/portal/projects/search", { params, signal });
