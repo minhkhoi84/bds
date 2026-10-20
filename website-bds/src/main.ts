@@ -15,6 +15,7 @@ import { GROUP_CODE, PAGE_SIZE } from './utils/constants';
 import { escapeHtml as esc } from './utils/format';
 import { projectDetailUrl } from './utils/slug';
 import { showToast } from './utils/toast';
+import { initMobileMenu } from './utils/mobileMenu';
 
 interface Filters {
   name: string;
@@ -287,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
   bindThumbFallback();
   bindShareButtons();
   bindFilters();
+  initMobileMenu();
   bindRetry(listEl, loadProjects);
   bindRetry(hotEl, loadHot);
   bindRetry(newsEl, loadNews);

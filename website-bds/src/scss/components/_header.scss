@@ -44,6 +44,20 @@
     }
   }
 
+  /* Nút hamburger (mobile only) */
+  .header-menu-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #2a52be;
+  }
+
   /* Navigation */
   .header-nav {
     .nav-list {
@@ -130,6 +144,76 @@
         color: #eef0fd;
         transform: translateY(-1px);
       }
+    }
+  }
+}
+/* Menu mobile (Frame 219): offcanvas-bottom cao theo nội dung, bo góc trên 16px */
+.mobile-menu.offcanvas-bottom {
+  --bs-offcanvas-height: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+  border-top: 0;
+  border-radius: 16px 16px 0 0;
+  background-color: #ffffff;
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+
+  .mobile-menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .mobile-menu-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: #38393d;
+    text-decoration: none;
+
+    &.active {
+      color: #2a52be;
+      font-weight: 700;
+    }
+  }
+
+  // Đường kẻ mờ dần hai đầu
+  .mobile-menu-divider {
+    height: 1px;
+    margin: 16px 0;
+    background: linear-gradient(90deg, transparent, #d9dde3, transparent);
+  }
+
+  .mobile-menu-auth {
+    gap: 12px;
+
+    .mobile-menu-register,
+    .mobile-menu-login {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .mobile-menu-register {
+      font-weight: 500;
+      color: #495057;
+      background: transparent;
+      border: 0;
+    }
+
+    .mobile-menu-login {
+      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(90deg, #2a52be 0%, #00b4d8 100%);
     }
   }
 }

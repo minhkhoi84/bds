@@ -19,7 +19,7 @@
         class="header-logo-img"
         />
       </a>
-      <nav class="header-nav">
+      <nav class="header-nav d-none d-md-block">
         <ul class="nav-list d-flex align-items-center list-unstyled mb-0">
           <li class="nav-item">
             <a href="/gioi-thieu" class="nav-link">GIỚI THIỆU</a>
@@ -33,15 +33,45 @@
         </ul>
       </nav>
 
-      <div class="header-auth d-flex align-items-center gap-3">
+      <div class="header-auth d-none d-md-flex align-items-center gap-3">
         <a href="/dang-ky" class="btn-register">Đăng ký</a>
         <a href="/dang-nhap" class="btn-login">Đăng nhập</a>
+      </div>
+
+      <!-- Mobile: số người online + nút mở menu -->
+      <div class="header-mobile-actions d-flex d-md-none align-items-center ms-auto">
+        <div class="header-online d-flex align-items-center">
+          <span class="header-online-dot rounded-circle" aria-hidden="true"></span>
+          <span class="header-online-text">100 người đang Online</span>
+        </div>
+        <button type="button" class="header-menu-btn" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu"
+          aria-controls="mobileMenu" aria-label="Mở menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="9" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
 
+  <!-- Menu mobile (Frame 219): mở từ dưới lên, mục đang chọn gắn theo URL trong mobileMenu.ts -->
+  <div class="mobile-menu offcanvas offcanvas-bottom d-md-none" id="mobileMenu" tabindex="-1" aria-label="Menu">
+    <nav class="mobile-menu-nav">
+      <a href="/gioi-thieu" class="mobile-menu-link" data-nav="gioi-thieu">GIỚI THIỆU</a>
+      <a href="/du-an" class="mobile-menu-link" data-nav="du-an">DỰ ÁN</a>
+      <a href="/tin-tuc" class="mobile-menu-link" data-nav="tin-tuc">TIN TỨC</a>
+    </nav>
+    <div class="mobile-menu-divider" aria-hidden="true"></div>
+    <div class="mobile-menu-auth d-flex">
+      <a href="/dang-ky" class="mobile-menu-register">Đăng ký</a>
+      <a href="/dang-nhap" class="mobile-menu-login">Đăng nhập</a>
+    </div>
+  </div>
+
   <!-- HERO / BANNER SECTION -->
-<section class="hero-section">
+<section class="hero-section pb-3 pb-md-0">
   <!-- 1. Ảnh Banner & Slider Dots -->
   <div class="hero-banner">
     <img src="/images/hero-banner.svg" alt="Dự án nổi bật" class="hero-banner-img" />
