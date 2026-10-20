@@ -221,6 +221,14 @@ function bindFilters(): void {
   });
   // Đổi dropdown: áp dụng ngay, kèm từ khóa đang hiện trong ô tìm kiếm
   selects.forEach((s) => s.addEventListener('change', () => applyFilters()));
+
+  // Mobile: nút phễu bật/tắt 4 dropdown (desktop luôn hiện, nút bị ẩn)
+  const filterToggle = searchForm?.querySelector<HTMLButtonElement>('.hero-filter-btn');
+  filterToggle?.addEventListener('click', () => {
+    const open = searchForm!.classList.toggle('is-filter-open');
+    filterToggle.setAttribute('aria-expanded', String(open));
+    filterToggle.setAttribute('aria-label', open ? 'Đóng bộ lọc' : 'Bộ lọc');
+  });
 }
 
 /* ---------- Nút "Chia sẻ": sao chép link dự án, không chuyển trang ---------- */

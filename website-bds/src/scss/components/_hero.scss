@@ -149,4 +149,98 @@
       }
     }
   }
+
+  /* Mobile (< 768px) theo Figma iPhone 16:
+     banner 4:5, chấm slide nằm trên ảnh (cách đáy 16px), dải search ngay dưới banner */
+  @media (max-width: 767.98px) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr); // không để nội dung kéo rộng cột quá màn hình
+
+    .hero-banner {
+      grid-area: 1 / 1;
+      height: auto;
+      aspect-ratio: 4 / 5;
+    }
+
+    // Bỏ khung bao để chấm slide và form thành ô grid của .hero-section
+    .hero-search-container {
+      display: contents;
+    }
+
+    .hero-dots {
+      grid-area: 1 / 1;
+      align-self: end;
+      margin-bottom: 16px;
+      z-index: 1;
+    }
+
+    .hero-search-box {
+      grid-area: 2 / 1;
+      position: static;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 16px 8px;
+
+      // Hàng 1: ô tìm kiếm + nút lọc; khi mở bộ lọc, 4 dropdown xuống dòng thành lưới 2x2
+      .hero-search-fields {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .search-field-name {
+        flex: 1 1 calc(100% - 54px); // chừa 8 (gap) + 46 (nút lọc) để dropdown không chen lên hàng 1
+        min-width: 0;
+      }
+
+      .search-field {
+        display: none;
+        flex: 0 0 calc(50% - 4px);
+        min-width: 0;
+      }
+
+      &.is-filter-open .search-field {
+        display: block;
+      }
+
+      .search-input-wrapper {
+        .search-icon {
+          stroke: #2a52be;
+        }
+
+        .form-control {
+          border: 0;
+        }
+      }
+    }
+
+    .hero-filter-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      border: 0;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: #2a52be;
+
+      .icon-close {
+        display: none;
+      }
+
+      &[aria-expanded="true"] {
+        .icon-filter {
+          display: none;
+        }
+
+        .icon-close {
+          display: block;
+        }
+      }
+    }
+  }
 }
