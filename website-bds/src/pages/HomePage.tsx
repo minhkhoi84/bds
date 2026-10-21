@@ -167,8 +167,8 @@ export default function HomePage({ filters = EMPTY_FILTERS }: { filters?: Filter
             </Stack>
           </Box>
 
-          {/* minWidth 0: không để tên/địa chỉ dài kéo cột rộng quá 280px */}
-          <Stack component="aside" sx={{ flex: { xl: '0 0 280px' }, width: { xs: '100%', xl: 'auto' }, minWidth: 0, gap: 2 }}>
+          {/* minWidth 0: không để tên/địa chỉ dài kéo cột rộng quá 280px; ẩn trên mobile (< 600px) */}
+          <Stack component="aside" sx={{ display: { xs: 'none', sm: 'flex' }, flex: { xl: '0 0 280px' }, width: { xs: '100%', xl: 'auto' }, minWidth: 0, gap: 2 }}>
             <Typography variant="sectionHeading">Dự án HOT</Typography>
             <Stack sx={{ gap: '14px' }}>
               {hotProjects.map((p) => (
