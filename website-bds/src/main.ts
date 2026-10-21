@@ -62,7 +62,7 @@ const hotSkeleton = repeat(4, `
   </div>`);
 
 const newsSkeleton = repeat(4, `
-  <div class="col-12 col-sm-6 col-lg-3" aria-hidden="true">
+  <div class="col-12 col-sm-6 col-lg-3 news-list__item" aria-hidden="true">
     <div class="news-card placeholder-glow">
       <span class="placeholder news-card__img"></span>
       <div class="news-card__body">

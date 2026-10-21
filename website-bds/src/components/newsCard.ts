@@ -7,7 +7,7 @@ import type { News } from "../types/news";
 export function newsCard(n: News): string {
   const desc = n.shortDescription ? `<p class="news-card__desc">${esc(n.shortDescription)}</p>` : "";
   return `
-  <div class="col-12 col-sm-6 col-lg-3">
+  <div class="col-12 col-sm-6 col-lg-3 news-list__item">
     <a href="${esc(newsDetailUrl(n.id))}" class="news-card">
       ${thumb(n.thumbnail, "news-card__img", n.title)}
       <div class="news-card__body">

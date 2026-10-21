@@ -31,6 +31,25 @@
   }
 }
 
+/* Mobile: danh sách tin tức vuốt ngang, mỗi thẻ rộng 240 */
+@media (max-width: 575.98px) {
+  .news-list {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar { display: none; }
+  }
+
+  .news-list__item {
+    flex: 0 0 auto;
+    width: 240px;
+    scroll-snap-align: start;
+  }
+}
+
 /* ---------- Thẻ tin tức (Frame 48): 260 x 299.33, gap 16, đáy 16 ---------- */
 .news-card {
   display: flex;
