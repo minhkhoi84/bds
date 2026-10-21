@@ -157,13 +157,28 @@ export default function HomePage({ filters = EMPTY_FILTERS }: { filters?: Filter
                   Xem tất cả <ArrowForwardIcon sx={{ fontSize: 16 }} />
                 </Link>
               </Stack>
-              <Grid container spacing={2}>
+              {/* Mobile (< 600px): vuốt ngang, card 240px, tràn sát mép màn hình; từ sm: lưới 2 / 4 cột */}
+              <Box
+                sx={{
+                  display: { xs: 'flex', sm: 'grid' },
+                  gridTemplateColumns: { sm: 'repeat(2, minmax(0, 1fr))', lg: 'repeat(4, minmax(0, 1fr))' },
+                  gap: 2,
+                  overflowX: { xs: 'auto', sm: 'visible' },
+                  scrollSnapType: { xs: 'x mandatory', sm: 'none' },
+                  scrollPaddingInline: { xs: 24, sm: 0 },
+                  mx: { xs: -3, sm: 0 },
+                  px: { xs: 3, sm: 0 },
+                  pb: { xs: '2px', sm: 0 },
+                  scrollbarWidth: 'none',
+                  '&::-webkit-scrollbar': { display: 'none' },
+                }}
+              >
                 {news.map((n) => (
-                  <Grid key={n.id} size={{ xs: 12, sm: 6, lg: 3 }}>
+                  <Box key={n.id} sx={{ flex: { xs: '0 0 240px' }, minWidth: 0, scrollSnapAlign: 'start' }}>
                     <NewsCard news={n} />
-                  </Grid>
+                  </Box>
                 ))}
-              </Grid>
+              </Box>
             </Stack>
           </Box>
 
