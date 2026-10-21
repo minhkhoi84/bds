@@ -50,6 +50,11 @@ body { color: #1f2937; }
     flex-basis: auto;
     width: 100%;
   }
+
+  // Mobile: ẩn khối Dự án HOT
+  @media (max-width: 767.98px) {
+    display: none;
+  }
 }
 
 .section-heading {
