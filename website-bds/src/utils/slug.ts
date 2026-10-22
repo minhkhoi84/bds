@@ -11,5 +11,12 @@ export function slugify(text = ""): string {
     .replace(/-+/g, "-");
 }
 
-export const projectDetailUrl = (id: string | number, slug: string): string =>
-  `/project-detail.html?id=${id}&slug=${slug}`;
+// /du-an/vinhomes-ocean-park-65 hoặc /du-an/vinhomes-ocean-park-65/vi-tri
+export const projectDetailUrl = (id: string | number, slug: string, tab?: string): string =>
+  `/du-an/${slug ? `${slug}-` : ""}${id}${tab ? `/${tab}` : ""}`;
+
+// "vinhomes-ocean-park-65" -> 65; không có id ở cuối -> null
+export function parseProjectId(slugId = ""): number | null {
+  const m = slugId.match(/(?:^|-)(\d+)$/);
+  return m ? Number(m[1]) : null;
+}

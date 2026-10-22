@@ -15,6 +15,7 @@ import CoverImage from './CoverImage';
 import type { Project } from '../types/project';
 import { STATUS } from '../utils/constants';
 import { projectDetailUrl, slugify } from '../utils/slug';
+import { Link as RouterLink } from 'react-router-dom';
 import { brand } from '../theme';
 
 interface ProjectCardProps {
@@ -63,8 +64,8 @@ export default function ProjectCard({ project, onShare }: ProjectCardProps) {
     >
       {/* Ảnh 3:2 + tag loại dự án + hàng badge */}
       <Box
-        component="a"
-        href={url}
+        component={RouterLink}
+        to={url}
         sx={{ position: 'relative', display: 'block', aspectRatio: '352 / 234.67', overflow: 'hidden', bgcolor: brand.primary100 }}
       >
         <CoverImage
@@ -121,7 +122,7 @@ export default function ProjectCard({ project, onShare }: ProjectCardProps) {
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           <Box sx={{ minWidth: 0 }}>
             <Typography component="h3" noWrap sx={{ fontSize: 14, fontWeight: 700, lineHeight: '20px', textTransform: 'uppercase' }}>
-              <Link href={url} underline="hover" sx={{ color: brand.blue }}>
+              <Link component={RouterLink} to={url} underline="hover" sx={{ color: brand.blue }}>
                 {project.name}
               </Link>
             </Typography>

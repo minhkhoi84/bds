@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useLocation } from 'react-router-dom';
 import { brand } from '../theme';
 
 // match: các tiền tố pathname thuộc mục đó (tô mục đang chọn ở menu mobile)
@@ -93,7 +94,7 @@ export default function Header() {
   const theme = useTheme();
   // Hamburger chỉ hiện khi < lg; lên lg (menu ngang) thì tự đóng sheet
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'));
-  const pathname = window.location.pathname;
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (isDesktop) setOpen(false);

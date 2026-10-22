@@ -9,7 +9,7 @@ export function cleanParams<T extends object>(obj: T): Partial<T> {
 
 // Response của backend chưa biết trước nên để any, chỉnh lại khi có Swagger
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const unwrap = (res: any) => {
+export const unwrap = (res: any) => {
   // Backend trả HTTP 200 cả khi lỗi nghiệp vụ -> kiểm tra code
   if (res?.code && res.code !== "SUCCESS") throw new Error(res.message || res.code);
   // { data: [...] } -> giữ nguyên để đọc totalElements/totalPages cùng cấp; { data: {...} } -> bóc ra

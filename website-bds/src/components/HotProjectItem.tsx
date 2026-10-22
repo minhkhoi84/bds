@@ -3,6 +3,7 @@ import Typography from '@mui/material/Typography';
 import CoverImage from './CoverImage';
 import type { Project } from '../types/project';
 import { projectDetailUrl, slugify } from '../utils/slug';
+import { Link as RouterLink } from 'react-router-dom';
 import { brand } from '../theme';
 
 // 1 item cột "Dự án HOT": ảnh 72x72 + tên + địa chỉ, gap 10
@@ -10,8 +11,8 @@ import { brand } from '../theme';
 export default function HotProjectItem({ project }: { project: Project }) {
   return (
     <Box
-      component="a"
-      href={projectDetailUrl(project.id, slugify(project.name))}
+      component={RouterLink}
+      to={projectDetailUrl(project.id, slugify(project.name))}
       sx={{
         display: 'flex',
         alignItems: 'center',

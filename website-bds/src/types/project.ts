@@ -14,6 +14,9 @@ export interface Project {
   createdAt: string;
 }
 
+// GET /portal/projects/detail: không có typeName/createdAt như API search
+export type ProjectDetail = Omit<Project, "typeName" | "createdAt"> & { code: string };
+
 export interface ProjectSearchParams {
   page?: number;
   pageSize?: number;

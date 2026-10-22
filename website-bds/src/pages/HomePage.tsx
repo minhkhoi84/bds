@@ -15,7 +15,7 @@ import ProjectCard from '../components/ProjectCard';
 import HotProjectItem from '../components/HotProjectItem';
 import NewsCard from '../components/NewsCard';
 import Pagination from '../components/Pagination';
-import { useToast } from '../components/Toast';
+import { useCopyLink } from '../hooks/useCopyLink';
 import { brand } from '../theme';
 
 export type Filters = Required<Pick<ProjectSearchParams, 'name' | 'investorId' | 'regionCode' | 'typeCode' | 'statusCode'>>;
@@ -34,7 +34,6 @@ function StatusMessage({ children, color = 'text.secondary' }: { children: React
 
 // filters do SearchBar (Bước 3) truyền xuống; đổi filters -> về trang 1
 export default function HomePage({ filters = EMPTY_FILTERS }: { filters?: Filters }) {
-  const showToast = useToast();
   const listRef = useRef<HTMLElement>(null);
 
   const [projects, setProjects] = useState<Project[]>([]);
@@ -96,18 +95,8 @@ export default function HomePage({ filters = EMPTY_FILTERS }: { filters?: Filter
     listRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
-  // Nút "Chia sẻ": sao chép link dự án, không chuyển trang
-  const handleShare = useCallback(
-    async (_: Project, url: string) => {
-      try {
-        await navigator.clipboard.writeText(location.origin + url);
-        showToast('Đã sao chép liên kết dự án');
-      } catch {
-        showToast('Không thể sao chép liên kết', 'error');
-      }
-    },
-    [showToast],
-  );
+  const copyLink = useCopyLink();
+  const handleShare = useCallback((_: Project, url: string) => copyLink(url), [copyLink]);
 
   let projectList: ReactNode;
   if (status === 'loading') {
