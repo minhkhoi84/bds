@@ -26,7 +26,10 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      input: { main: resolve(import.meta.dirname, "index.html") },
+      input: {
+        main: resolve(import.meta.dirname, "index.html"),
+        projectDetail: resolve(import.meta.dirname, "project-detail.html"),
+      },
     },
   },
 });

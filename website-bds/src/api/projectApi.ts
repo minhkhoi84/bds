@@ -1,9 +1,9 @@
 import axiosClient from "./axiosClient";
-import { cleanParams, normalizePaged } from "./helpers";
-import { toProject } from "./mappers";
+import { cleanParams, normalizePaged, unwrap } from "./helpers";
+import { toProject, toProjectDetail } from "./mappers";
 import { PAGE_SIZE, SORT_NEWEST } from "../utils/constants";
 import type { ApiResponse, Paged, RawProject } from "../types/api";
-import type { Project, ProjectSearchParams } from "../types/project";
+import type { Project, ProjectDetail, ProjectSearchParams } from "../types/project";
 
 export const projectApi = {
   async search({
@@ -21,5 +21,11 @@ export const projectApi = {
   // Dự án HOT: cùng endpoint, isHot=true, 100 mục
   async searchHot(): Promise<Paged<Project>> {
     return projectApi.search({ page: 1, pageSize: 100, isHot: true });
+  },
+
+  // Không tồn tại -> HTTP 404 (code RESOURCE_NOT_FOUND), axios reject. id phải là số: chuỗi -> backend trả 500
+  async getDetail(id: number, { signal }: { signal?: AbortSignal } = {}): Promise<ProjectDetail> {
+    const { data } = await axiosClient.get<ApiResponse<RawProject>>("/portal/projects/detail", { params: { id }, signal });
+    return toProjectDetail(unwrap(data).data);
   },
 };

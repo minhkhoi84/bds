@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chi tiết dự án | Website Bất Động Sản</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  {{> header}}
+
+  <!-- Nội dung nạp động qua src/pages/projectDetail.ts (?id=&slug=&tab=) -->
+  <main class="project-detail" id="project-detail">
+    <div class="container py-5 text-center">
+      <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Đang tải...</span></div>
+    </div>
+  </main>
+
+  {{> footer}}
+
+  <script type="module" src="/src/pages/projectDetail.ts"></script>
+</body>
+</html>

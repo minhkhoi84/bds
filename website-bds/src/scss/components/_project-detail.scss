@@ -1,0 +1,295 @@
+/* Trang chi tiết dự án (project-detail.html) - Figma "Chi tiết dự án - vị trí" */
+.project-detail {
+  padding: 16px 0 32px;
+}
+
+/* Breadcrumb: "Dự án / Tên dự án", chữ 12px */
+.project-breadcrumb {
+  margin-bottom: 16px;
+  font-size: 12px;
+  line-height: 16px;
+
+  --bs-breadcrumb-divider-color: #{$text-grey};
+  --bs-breadcrumb-item-padding-x: 4px;
+
+  a {
+    color: $brand-blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .breadcrumb-item.active {
+    font-weight: 600;
+    color: $text-dark;
+  }
+}
+
+/* Các khối cách nhau 24px: tiêu đề, banner, thanh tab, nội dung tab */
+.project-detail__body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Tiêu đề + mô tả bên trái, nút Chia sẻ bên phải (< 768px: nút xuống dòng, căn trái) */
+.project-head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+
+  @include media-breakpoint-up(md) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.project-head__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-head__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  text-transform: uppercase;
+  color: $brand-blue;
+  overflow-wrap: anywhere;
+}
+
+.project-head__desc {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: $text-grey-500;
+}
+
+/* < 768px (Figma iPhone): nút full chiều ngang, chữ căn giữa; >= 768px: vừa nội dung, nằm bên phải tiêu đề */
+.project-share-btn {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 8px;
+  background: $brand-gradient-figma;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+
+  @include media-breakpoint-up(md) {
+    align-self: auto;
+  }
+
+  &:hover {
+    opacity: 0.92;
+  }
+
+  .bi {
+    font-size: 16px;
+  }
+}
+
+/* Banner: 1 ảnh, bo 16px; không có ảnh / ảnh lỗi -> ô xám + logo (components/thumb.ts) */
+.project-banner {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1140 / 593; // Figma: desktop và iPhone cùng tỉ lệ ~1.92 : 1
+  object-fit: cover;
+  border-radius: 16px;
+
+  &.bg-body-secondary {
+    background-color: $img-fallback-bg !important; // màu Figma thay cho xám mặc định của Bootstrap
+  }
+}
+
+/* Thanh tab: dải gradient, tab đang chọn là viên thuốc nền xanh đậm + viền trắng mờ.
+   >= 1200px chia đều; nhỏ hơn cuộn ngang (ẩn thanh cuộn), tab đang chọn tự cuộn vào giữa (projectDetail.ts) */
+.project-tabs {
+  position: relative; // mốc offsetLeft cho centerActiveTab()
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background: $brand-gradient-figma;
+  overflow-x: auto;
+  scrollbar-width: none;
+
+  // < 768px (Figma iPhone): tràn sát mép phải màn hình để thấy còn tab phía sau.
+  // 24px = lề phải của .main-content-container
+  @include media-breakpoint-down(md) {
+    margin-right: -24px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.project-tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+
+  @include media-breakpoint-up(xl) {
+    flex: 1;
+  }
+
+  .bi {
+    font-size: 18px;
+  }
+
+  &:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+
+  &.active {
+    font-weight: 600;
+    border-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(30, 64, 160, 0.6);
+  }
+
+  &:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: -2px;
+  }
+}
+
+/* Tab chưa có nội dung */
+.project-tab-empty {
+  margin: 0;
+  padding: 64px 0;
+  text-align: center;
+  color: $text-grey;
+}
+
+/* Tab Vị trí: ảnh bản đồ lớn -> (chữ | ảnh vệ tinh) -> Google Map, cách nhau 24px */
+.project-location {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.project-location__map {
+  display: block;
+  width: 100%;
+  height: auto; // ảnh trong dữ liệu có sẵn height="100%" -> không để méo
+  border-radius: 16px;
+}
+
+/* Chữ (trái) + ảnh vệ tinh (phải): >= 992px chia 2 cột bằng nhau, nhỏ hơn xếp chồng */
+.project-location__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+
+  &.is-two-cols {
+    @include media-breakpoint-up(lg) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+.project-location__side {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+}
+
+/* HTML từ trình soạn thảo (đã lọc DOMPurify) */
+.project-location__text {
+  font-size: 14px;
+  line-height: 22px;
+  color: $text-dark;
+  overflow-wrap: anywhere;
+
+  p {
+    margin: 0 0 8px;
+  }
+
+  ul,
+  ol {
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+
+  li {
+    line-height: 24px;
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin: 16px 0 8px;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 22px;
+    color: $brand-blue;
+  }
+
+  a {
+    color: $brand-blue;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 12px 0;
+    border-radius: 16px;
+  }
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* Google Map cuối tab Vị trí (Figma: cao 472px trên desktop) */
+.project-location__gmap {
+  display: block;
+  width: 100%;
+  height: 300px;
+  border: 0;
+  border-radius: 16px;
+
+  @include media-breakpoint-up(md) {
+    height: 400px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    height: 472px;
+  }
+}

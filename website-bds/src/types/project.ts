@@ -32,3 +32,12 @@ export interface HotProject {
   location: string;
   thumbnail: string;
 }
+
+// GET /portal/projects/detail (map từ RawProject trong api/mappers.ts)
+export interface ProjectDetail {
+  id: number;
+  name: string;
+  address: string;
+  shortDescription: string;
+  thumbnail: string; // ảnh banner, rỗng nếu backend không có ảnh
+}

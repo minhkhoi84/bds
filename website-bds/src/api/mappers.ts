@@ -1,6 +1,6 @@
 import { STATUS } from "../utils/constants";
 import type { RawFileInfo, RawNews, RawProject } from "../types/api";
-import type { Project } from "../types/project";
+import type { Project, ProjectDetail } from "../types/project";
 import type { News } from "../types/news";
 
 // fileInfo có thể null -> thumbnail rỗng
@@ -18,6 +18,16 @@ export function toProject(r: RawProject): Project {
     typeName: r.typeName ?? "",
     isHot: !!r.isHot,
     isUpcoming: r.statusCode === STATUS.COMING_SOON,
+  };
+}
+
+export function toProjectDetail(r: RawProject): ProjectDetail {
+  return {
+    id: r.id,
+    name: r.name,
+    address: (r.address ?? "").trim(),
+    shortDescription: r.shortDescription ?? "",
+    thumbnail: fileLink(r.fileInfo),
   };
 }
 

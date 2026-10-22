@@ -21,3 +21,13 @@ $container-max-widths: (
   xl: 1140px,
   xxl: 1440px,
 );
+
+// Màu lấy từ Figma Inspect (trang chi tiết dự án). $primary / $brand-gradient ở trên vẫn là màu ước lượng của trang chủ
+$brand-blue: #2a52be;
+$brand-cyan-figma: #00abdf;
+$brand-gradient-figma: linear-gradient(90deg, #2a52be 0%, #00b4d8 100%);
+$text-dark: #38393d;
+$text-grey: #7c7d84;
+$text-grey-500: #595a60;
+$img-fallback-bg: #f0f1f1;
+$border-light: #e5e7eb;
