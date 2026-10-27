@@ -1,6 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
 import { Link as RouterLink, NavLink, Navigate, useParams } from 'react-router-dom';
-import { isAxiosError } from 'axios';
+import { isAxiosError, isCancel } from 'axios';
 import Box from '@mui/material/Box';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Button from '@mui/material/Button';
@@ -58,7 +58,10 @@ function ProjectTabs({ baseUrl, active }: { baseUrl: string; active: TabSlug }) 
         display: 'flex',
         gap: 1,
         p: 1,
-        borderRadius: '8px',
+        // < 768px (Figma iPhone): tràn sát mép phải màn hình để thấy còn tab phía sau.
+        // -2 = 16px = lề của <Container> (theme MuiContainer padding 1rem)
+        mr: { xs: -2, md: 0 },
+        borderRadius: { xs: '8px 0 0 8px', md: '8px' },
         background: brand.gradient,
         overflowX: 'auto',
         scrollbarWidth: 'none',
@@ -122,23 +125,21 @@ export default function ProjectDetailPage() {
   const copyLink = useCopyLink();
   const [state, setState] = useState<LoadState>({ status: 'loading' });
 
+  // Huỷ request khi rời trang / đổi id (StrictMode ở dev chạy effect 2 lần -> request đầu bị huỷ, không gửi lặp)
   useEffect(() => {
     if (id == null) return;
-    let ignore = false;
+    const controller = new AbortController();
     setState({ status: 'loading' });
     window.scrollTo(0, 0);
     projectApi
-      .getDetail(id)
-      .then((project) => {
-        if (!ignore) setState({ status: 'ready', project });
-      })
+      .getDetail(id, controller.signal)
+      .then((project) => setState({ status: 'ready', project }))
       .catch((err) => {
+        if (isCancel(err)) return;
         console.error(err);
-        if (!ignore) setState({ status: isAxiosError(err) && err.response?.status === 404 ? 'notFound' : 'error' });
+        setState({ status: isAxiosError(err) && err.response?.status === 404 ? 'notFound' : 'error' });
       });
-    return () => {
-      ignore = true;
-    };
+    return () => controller.abort();
   }, [id]);
 
   const project = state.status === 'ready' ? state.project : null;
@@ -187,7 +188,8 @@ export default function ProjectDetailPage() {
             startIcon={<OpenInNewIcon />}
             onClick={() => copyLink(baseUrl)}
             sx={{
-              alignSelf: { xs: 'flex-start', md: 'center' },
+              // < 768px (Figma iPhone): full chiều ngang, chữ căn giữa; >= 768px: nằm bên phải tiêu đề
+              alignSelf: { xs: 'stretch', md: 'center' },
               flexShrink: 0,
               height: 40,
               px: 2,
@@ -209,7 +211,8 @@ export default function ProjectDetailPage() {
           src={p.thumbnail}
           alt={p.name}
           logoSize={64}
-          sx={{ width: '100%', aspectRatio: { xs: '4 / 3', md: '1140 / 593' }, objectFit: 'cover', borderRadius: '16px' }}
+          // Figma: desktop và iPhone cùng tỉ lệ ~1.92 : 1
+          sx={{ width: '100%', aspectRatio: '1140 / 593', objectFit: 'cover', borderRadius: '16px' }}
         />
 
         <ProjectTabs baseUrl={baseUrl} active={activeTab} />

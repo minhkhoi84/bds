@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
+import { isCancel } from 'axios';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
@@ -52,42 +53,46 @@ export default function HomePage({ filters = EMPTY_FILTERS }: { filters?: Filter
 
   /* ---------- Danh sách dự án + phân trang ---------- */
   useEffect(() => {
-    let ignore = false; // tránh response cũ ghi đè response mới khi lọc nhanh
+    // Huỷ request cũ khi lọc nhanh -> response cũ không ghi đè response mới
+    const controller = new AbortController();
     setStatus('loading');
     projectApi
-      .search({ page, ...filters })
+      .search({ page, ...filters }, controller.signal)
       .then((res) => {
         debugLog('projectApi.search', res);
-        if (ignore) return;
         setProjects(Array.isArray(res?.items) ? res.items : []);
         setTotalPages(res?.totalPages ?? 1);
         setStatus('ready');
       })
       .catch((err) => {
+        if (isCancel(err)) return;
         console.error(err);
-        if (!ignore) setStatus('error');
+        setStatus('error');
       });
-    return () => {
-      ignore = true;
-    };
+    return () => controller.abort();
   }, [page, filters]);
 
   /* ---------- Dự án HOT + Tin tức (4 bài mới nhất) ---------- */
   useEffect(() => {
+    const controller = new AbortController();
+    const logError = (err: unknown) => {
+      if (!isCancel(err)) console.error(err);
+    };
     projectApi
-      .getHotProjects()
+      .getHotProjects(controller.signal)
       .then((items) => {
         debugLog('projectApi.getHotProjects', items);
         setHotProjects(items);
       })
-      .catch(console.error);
+      .catch(logError);
     newsApi
-      .search()
+      .search({}, controller.signal)
       .then((res) => {
         debugLog('newsApi.search', res);
         setNews(Array.isArray(res?.items) ? res.items : []);
       })
-      .catch(console.error);
+      .catch(logError);
+    return () => controller.abort();
   }, []);
 
   const goToPage = (p: number) => {

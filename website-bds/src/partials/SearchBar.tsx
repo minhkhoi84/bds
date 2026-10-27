@@ -1,4 +1,5 @@
 import { useEffect, useState, type Dispatch, type SetStateAction } from 'react';
+import { isCancel } from 'axios';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -39,14 +40,16 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
 
   // Nạp dữ liệu cho 4 dropdown
   useEffect(() => {
+    const controller = new AbortController();
+    const { signal } = controller;
     const toOptions = <T,>(list: T[], v: keyof T, l: keyof T): Option[] =>
       list.map((i) => ({ value: String(i[v]), label: String(i[l]) }));
 
     Promise.all([
-      investorApi.getList(),
-      masterDataApi.getByGroup(GROUP_CODE.REGION),
-      masterDataApi.getByGroup(GROUP_CODE.TYPE),
-      masterDataApi.getByGroup(GROUP_CODE.STATUS),
+      investorApi.getList(signal),
+      masterDataApi.getByGroup(GROUP_CODE.REGION, signal),
+      masterDataApi.getByGroup(GROUP_CODE.TYPE, signal),
+      masterDataApi.getByGroup(GROUP_CODE.STATUS, signal),
     ])
       .then(([investors, regions, types, statuses]) =>
         setOptions({
@@ -56,7 +59,10 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
           statusCode: toOptions(statuses, 'code', 'value'),
         }),
       )
-      .catch((err) => console.error('Không tải được dữ liệu bộ lọc', err));
+      .catch((err) => {
+        if (!isCancel(err)) console.error('Không tải được dữ liệu bộ lọc', err);
+      });
+    return () => controller.abort();
   }, []);
 
   // Không đổi thì trả lại state cũ -> không gọi lại API

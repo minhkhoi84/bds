@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { isCancel } from 'axios';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
@@ -35,20 +36,17 @@ export default function ProjectLocation({ projectId, projectName }: { projectId:
   const [state, setState] = useState<LoadState>({ status: 'loading' });
 
   useEffect(() => {
-    let ignore = false;
+    const controller = new AbortController();
     setState({ status: 'loading' });
     contentApi
-      .getProjectContent(projectId, 'LOCATION')
-      .then((content) => {
-        if (!ignore) setState({ status: 'ready', content });
-      })
+      .getProjectContent(projectId, 'LOCATION', controller.signal)
+      .then((content) => setState({ status: 'ready', content }))
       .catch((err) => {
+        if (isCancel(err)) return;
         console.error(err);
-        if (!ignore) setState({ status: 'error' });
+        setState({ status: 'error' });
       });
-    return () => {
-      ignore = true;
-    };
+    return () => controller.abort();
   }, [projectId]);
 
   const content = state.status === 'ready' ? state.content : null;

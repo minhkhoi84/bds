@@ -16,9 +16,9 @@ const toNews = ({ shortContent, fileInfo, ...n }: RawNews): News => ({
 });
 
 export const newsApi = {
-  async search({ pageSize = 4, sort = SORT_NEWEST }: { pageSize?: number; sort?: string } = {}): Promise<Paged<News>> {
+  async search({ pageSize = 4, sort = SORT_NEWEST }: { pageSize?: number; sort?: string } = {}, signal?: AbortSignal): Promise<Paged<News>> {
     // Trang chủ chỉ lấy trang đầu, không lọc theo projectId
-    const { data } = await axiosClient.get("/portal/news/search", { params: { pageNumber: 0, pageSize, sort } });
+    const { data } = await axiosClient.get("/portal/news/search", { params: { pageNumber: 0, pageSize, sort }, signal });
     const paged = normalizePaged<RawNews>(data, pageSize);
     return { ...paged, items: paged.items.map(toNews) };
   },
